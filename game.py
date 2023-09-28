@@ -29,6 +29,7 @@ pygame.init()
 # Creates display window
 screen = pygame.display.set_mode((800, 400))
 pygame.display.set_caption('DinoRun')
+pygame.display.set_icon(pygame.image.load('graphics/icon.png'))
 clock = pygame.time.Clock()
 score_font = pygame.font.Font('font/Pixeltype.ttf', 50)
 game_font = pygame.font.Font('font/Pixeltype.ttf', 80)
@@ -137,15 +138,15 @@ while True:
         score = display_score()
         screen.blit(cactus_surface, cactus_rect)
 
-        cloud_back_1_pos_X -= 1
+        cloud_back_1_pos_X -= .2
         if cloud_back_1_pos_X < -240:
             cloud_back_1_pos_X = 800 + 100
 
-        cloud_back_2_pos_X -= 1
+        cloud_back_2_pos_X -= .2
         if cloud_back_2_pos_X < -140:
             cloud_back_2_pos_X = 800 + 200
 
-        cloud_back_3_pos_X -= 1
+        cloud_back_3_pos_X -= .2
         if cloud_back_3_pos_X < -140:
             cloud_back_3_pos_X = 800 + 200
 
@@ -161,7 +162,7 @@ while True:
         if mount_small_pos_X < -800:
             mount_small_pos_X = 0
 
-        ground_pos_X -= 5
+        ground_pos_X -= 10
         if ground_pos_X <= -800:
             ground_pos_X = 0
 
