@@ -6,7 +6,7 @@ def display_score():
     current_time = pygame.time.get_ticks()//1000 - start_time
     score_surface = score_font.render(
         f'score: {current_time}', False, '#eeeeee')
-    score_rect = score_surface.get_rect(center=(400, 50))
+    score_rect = score_surface.get_rect(center=(700, 40))
     screen.blit(score_surface, score_rect)
     return current_time
 
