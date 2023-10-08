@@ -1,4 +1,9 @@
 import pygame
+import time
+from src.utils import loader
+from src.screens import loading, mainmenu
+from src.dino import base, animation
+from src.maps import redmarsh
 from sys import exit
 
 
@@ -32,73 +37,32 @@ pygame.display.set_caption('DinoRun')
 pygame.display.set_icon(pygame.image.load('graphics/icon.png'))
 clock = pygame.time.Clock()
 score_font = pygame.font.Font('font/Pixeltype.ttf', 50)
-game_font = pygame.font.Font('font/Pixeltype.ttf', 80)
 game_active = False
+show_loading_screen = True
 start_time = 0
 score = 0
 
-# Surface imports and rectangles
-
-# Scenery
-sky_surface = pygame.image.load('graphics/scenery/map-1/sky.png').convert()
-mount_large_surf = pygame.image.load(
-    'graphics/scenery/map-1/mtn-large.png').convert_alpha()
-mount_med_surf = pygame.image.load(
-    'graphics/scenery/map-1/mtn-medium.png').convert_alpha()
-mount_small_surf = pygame.image.load(
-    'graphics/scenery/map-1/mtn-small.png').convert_alpha()
-cloud_back_1_surf = pygame.image.load(
-    'graphics/scenery/map-1/cloud-back-1.png').convert_alpha()
-cloud_back_2_surf = pygame.image.load(
-    'graphics/scenery/map-1/cloud-back-2.png').convert_alpha()
-cloud_back_3_surf = pygame.image.load(
-    'graphics/scenery/map-1/cloud-back-3.png').convert_alpha()
-ground_surface = pygame.image.load(
-    'graphics/scenery/map-1/ground.png').convert_alpha()
-
+# Map Surface imports and rectangles
+map_surf = redmarsh.map_init(pygame=pygame)
 
 # player and obstacles
 # player
-dino_walk_1 = pygame.image.load(
-    'graphics/dino/dino-walk-1.png').convert_alpha()
-dino_walk_2 = pygame.image.load(
-    'graphics/dino/dino-walk-2.png').convert_alpha()
-dino_walk_3 = pygame.image.load(
-    'graphics/dino/dino-walk-3.png').convert_alpha()
+dino_walk_1, dino_walk_2, dino_walk_3 = base.base_dino(pygame=pygame)
 dino_walk = [dino_walk_1, dino_walk_2, dino_walk_3]
 dino_index = 0
 dino_jump = pygame.image.load(
     'graphics/dino/dino-jump.png').convert_alpha()
-
 dino_surf = dino_walk[dino_index]
 dino_rect = dino_surf.get_rect(midbottom=(100, 318))
 
-
-dino_stand = pygame.image.load(
-    'graphics/scenery/map-1/dino.png').convert_alpha()
-dino_stand = pygame.transform.scale2x(dino_stand)
-dino_stand_rect = dino_stand.get_rect(center=(350, 200))
-
-# Rectangles
+# obstacle
 cactus_surface = pygame.image.load(
     'graphics/scenery/map-1/cactus-1.png').convert_alpha()
 cactus_rect = cactus_surface.get_rect(midbottom=(800, 330))
 
-# pause screen
-game_name = game_font.render('DinoRun', False, '#eeeeee')
-game_name_rect = game_name.get_rect(center=(400, 70))
-game_message = game_font.render('Press space to run', False, '#eeeeee')
-game_message_rect = game_message.get_rect(center=(400, 340))
-
 # Starting position of surfaces
-default_pos_X = 0
-mount_large_pos_X = 0
-mount_med_pos_X = 0
-mount_small_pos_X = 0
-cloud_back_1_pos_X = 60
-cloud_back_2_pos_X = 500
-cloud_back_3_pos_X = 700
-ground_pos_X = 0
+starting_pos = redmarsh.get_starting_pos()
+default_pos_X, mount_large_pos_X, mount_med_pos_X, mount_small_pos_X, cloud_back_1_pos_X, cloud_back_2_pos_X, cloud_back_3_pos_X, ground_pos_X = starting_pos
 
 # Gravity
 dino_gravity = 0
@@ -126,6 +90,8 @@ while True:
 
     if game_active:
         # scenery
+        # redmarsh.render_map(screen, map_surf, starting_pos)
+        sky_surface, mount_large_surf, mount_med_surf, mount_small_surf, cloud_back_1_surf, cloud_back_2_surf, cloud_back_3_surf, ground_surface = map_surf
         screen.blit(sky_surface, (default_pos_X, 0))
         screen.blit(cloud_back_1_surf, (cloud_back_1_pos_X, 80))
         screen.blit(cloud_back_2_surf, (cloud_back_2_pos_X, 40))
@@ -177,23 +143,21 @@ while True:
             dino_rect.bottom = 318
 
         dino_animation()
+        # dino_surf = animation.dino_animation(
+        #     dino_surf, dino_index, dino_rect, dino_jump, dino_walk)
         screen.blit(dino_surf, dino_rect)
 
         if cactus_rect.colliderect(dino_rect):
             game_active = False
 
     else:
-        screen.fill("#CA3247")
-        screen.blit(dino_stand, dino_stand_rect)
-        score_message = score_font.render(
-            f'Your score: {score}', False, "#eeeeee")
-        score_message_rect = score_message.get_rect(center=(400, 330))
-        screen.blit(game_name, game_name_rect)
-
-        if score == 0:
-            screen.blit(game_message, game_message_rect)
+        if show_loading_screen:
+            show_loading_screen = loader.loader_time(
+                time, show_loading_screen, 5)
+            loading.loading(pygame, screen)
         else:
-            screen.blit(score_message, score_message_rect)
+            mainmenu.main_menu(pygame, screen, score, score_font)
+            select_map = 'rm'
 
     # Updates display surface
     pygame.display.update()
