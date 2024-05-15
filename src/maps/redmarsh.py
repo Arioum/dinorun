@@ -1,3 +1,5 @@
+# Red Marsh - mountainous desert (Dusk)
+
 def get_starting_pos():
     default_pos_X = 0
     mount_large_pos_X = 0
@@ -12,24 +14,18 @@ def get_starting_pos():
 
 def map_init(pygame):
     sky_surface = pygame.image.load('graphics/scenery/map-1/sky.png').convert()
-    mount_large_surf = pygame.image.load(
-        'graphics/scenery/map-1/mtn-large.png').convert_alpha()
-    mount_med_surf = pygame.image.load(
-        'graphics/scenery/map-1/mtn-medium.png').convert_alpha()
-    mount_small_surf = pygame.image.load(
-        'graphics/scenery/map-1/mtn-small.png').convert_alpha()
-    cloud_back_1_surf = pygame.image.load(
-        'graphics/scenery/map-1/cloud-back-1.png').convert_alpha()
-    cloud_back_2_surf = pygame.image.load(
-        'graphics/scenery/map-1/cloud-back-2.png').convert_alpha()
-    cloud_back_3_surf = pygame.image.load(
-        'graphics/scenery/map-1/cloud-back-3.png').convert_alpha()
-    ground_surface = pygame.image.load(
-        'graphics/scenery/map-1/ground.png').convert_alpha()
+    mount_large_surf = pygame.image.load('graphics/scenery/map-1/mtn-large.png').convert_alpha()
+    mount_med_surf = pygame.image.load('graphics/scenery/map-1/mtn-medium.png').convert_alpha()
+    mount_small_surf = pygame.image.load('graphics/scenery/map-1/mtn-small.png').convert_alpha()
+    cloud_back_1_surf = pygame.image.load('graphics/scenery/map-1/cloud-back-1.png').convert_alpha()
+    cloud_back_2_surf = pygame.image.load('graphics/scenery/map-1/cloud-back-2.png').convert_alpha()
+    cloud_back_3_surf = pygame.image.load('graphics/scenery/map-1/cloud-back-3.png').convert_alpha()
+    ground_surface = pygame.image.load('graphics/scenery/map-1/ground.png').convert_alpha()
     return sky_surface, mount_large_surf, mount_med_surf, mount_small_surf, cloud_back_1_surf, cloud_back_2_surf, cloud_back_3_surf, ground_surface
 
 
-def render_map(screen, default_pos_X, mount_large_pos_X, mount_med_pos_X, mount_small_pos_X, cloud_back_1_pos_X, cloud_back_2_pos_X, cloud_back_3_pos_X, ground_pos_X):
+def render_map(screen, default_pos_X, mount_large_pos_X, mount_med_pos_X, mount_small_pos_X,
+               cloud_back_1_pos_X, cloud_back_2_pos_X, cloud_back_3_pos_X, ground_pos_X):
     # sky_surface, mount_large_surf, mount_med_surf, mount_small_surf, cloud_back_1_surf, cloud_back_2_surf, cloud_back_3_surf, ground_surface = map_surf
 
     # default_pos_X, mount_large_pos_X, mount_med_pos_X, mount_small_pos_X, cloud_back_1_pos_X, cloud_back_2_pos_X, cloud_back_3_pos_X, ground_pos_X = starting_pos
